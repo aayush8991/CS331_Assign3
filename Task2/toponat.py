@@ -56,9 +56,9 @@ def run():
     h9 = net.get('h9')
     h9.cmd("sysctl -w net.ipv4.ip_forward=1")
 
-    # Add routes for external hosts (h3-h8) to reach 10.1.1.0/24 via h9's 10.0.0.1 interface
+    # Add routes for external hosts (h3-h8) to reach 10.1.1.0/24 via h9's 172.10.10.16 interface
     for host in ['h3', 'h4', 'h5', 'h6', 'h7', 'h8']:
-        net.get(host).cmd("ip route add 10.1.1.0/24 via 10.0.0.1")
+        net.get(host).cmd("ip route add 10.1.1.0/24 via 172.10.10.16")
 
     # SNAT (Outbound: Translate private IPs to h9's public IP)
     h9.cmd("iptables -t nat -A POSTROUTING -s 10.1.1.0/24 -o h9-eth0 -j MASQUERADE")
